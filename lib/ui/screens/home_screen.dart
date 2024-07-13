@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ProductDataModel> myList = [];
 
   Future<void> getProductsData() async {
+    //https://fakestoreapi.com/products url for task
     var response = await http.get(Uri.parse('https://dummyjson.com/products'));
 
     if (response.statusCode == 200) {
