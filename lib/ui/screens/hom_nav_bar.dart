@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:icthub_new_repo/ui/screens/counter_screen.dart';
+import 'package:icthub_new_repo/data/data_sourec/auth.dart';
 import 'package:icthub_new_repo/ui/screens/home_screen.dart';
+import 'package:icthub_new_repo/ui/screens/login_screen.dart';
+import 'package:icthub_new_repo/ui/screens/profile_screen.dart';
 
 class HomeNavBar extends StatefulWidget {
   const HomeNavBar({super.key});
@@ -14,13 +16,28 @@ class _HomeNavBarState extends State<HomeNavBar> {
 
   final List<Widget> _screens = const [
     HomeScreen(),
-    CounterScreen(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              AuthDataSource.signOut().then((a) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                  (route) => false,
+                );
+              });
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -37,7 +54,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Counter',
+            label: 'Profile',
           ),
         ],
       ),

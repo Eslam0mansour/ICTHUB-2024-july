@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 class MyFormField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final String label;
+  final IconData prefixIcon;
+  final String? Function(String?)? validator;
   const MyFormField({
     super.key,
     required this.controller,
     required this.hintText,
+    required this.label,
+    required this.prefixIcon,
+    required this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      keyboardType: TextInputType.number,
+      validator: validator,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.grey.withOpacity(0.2),
@@ -21,15 +27,12 @@ class MyFormField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         hintText: hintText,
-        label: Text(hintText),
-        suffixIcon: Icon(
-          Icons.plus_one,
-        ),
+        label: Text(label),
         prefixIcon: Icon(
-          Icons.plus_one,
+          prefixIcon,
         ),
         hintStyle: TextStyle(
-          color: Colors.red,
+          color: Colors.grey,
         ),
         prefixIconColor: Colors.blue,
       ),
