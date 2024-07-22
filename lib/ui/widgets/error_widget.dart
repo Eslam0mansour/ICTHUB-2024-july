@@ -18,7 +18,7 @@ class MyErrorWidget extends StatelessWidget {
             size: 50,
           ),
           const SizedBox(height: 20),
-          Text('Error occured: $errorMsg'),
+          Text('Error occurred: $errorMsg'),
         ],
       ),
     );

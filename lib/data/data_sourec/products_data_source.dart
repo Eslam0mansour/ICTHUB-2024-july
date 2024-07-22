@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:icthub_new_repo/data/data_models/product_data_model.dart';
 
+import '../../main.dart';
+
 class ProductsDataSource {
   /// this variable is used to check if the data is loading or not
   static bool isLoading = true;
 
-  /// this variable is used to check if an error occured or not
+  /// this variable is used to check if an error occurred or not
   static bool isError = false;
 
   /// this variable is used to store the error message
@@ -14,6 +16,7 @@ class ProductsDataSource {
   /// this list is used to store the data of the products
   static List<ProductDataModel> myList = [];
 
+  /// this function is used to get the data of the products from the api
   // static Future<bool> getProductsData() async {
   //   //https://fakestoreapi.com/products url for task
   //   /// first: we will make a get request to the api
@@ -47,10 +50,10 @@ class ProductsDataSource {
   //       isLoading = false;
   //       return true;
   //     } catch (e) {
-  //       /// if an error occured we will catch it and print it
+  //       /// if an error occurred we will catch it and print it
   //       print('error $e');
   //
-  //       /// if an error occured we will set the isError to true to show the error message
+  //       /// if an error occurred we will set the isError to true to show the error message
   //       /// and set the isLoading to false to stop the loading indicator
   //       /// and set the errorMessage to the error message to show it to the user
   //
@@ -62,12 +65,12 @@ class ProductsDataSource {
   //   }
   //
   //   /// third: if the response status code is not 200
-  //   /// that means an error occured and we will print the error
+  //   /// that means an error occurred and we will print the error
   //   else {
   //     print('error${response.statusCode}');
   //     print('error${response.body}');
   //
-  //     /// if an error occured we will set the isError to true to show the error message
+  //     /// if an error occurred we will set the isError to true to show the error message
   //     isLoading = false;
   //
   //     /// and set the errorMessage to the error message to show it to the user
@@ -79,11 +82,14 @@ class ProductsDataSource {
   //   }
   // }
 
+  /// this function is used to get the data of the products from the [FireStore] collection 'products'
   static Future<bool> getProductsData() async {
     try {
+      /// first: we will request the data from the [FireStore] collection 'products'
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance.collection('products').get();
 
+      /// second: we will get the list of products from the querySnapshot
       final productsList = querySnapshot.docs.map((doc) {
         return doc.data();
       }).toList();
@@ -103,10 +109,10 @@ class ProductsDataSource {
       isLoading = false;
       return true;
     } catch (e) {
-      /// if an error occured we will catch it and print it
-      print('error $e');
+      /// if an error occurred we will catch it and print it
+      log.e('error $e');
 
-      /// if an error occured we will set the isError to true to show the error message
+      /// if an error occurred we will set the isError to true to show the error message
       /// and set the isLoading to false to stop the loading indicator
       /// and set the errorMessage to the error message to show it to the user
 

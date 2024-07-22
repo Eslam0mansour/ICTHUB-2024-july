@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icthub_new_repo/data/data_models/user_data_model.dart';
-import 'package:icthub_new_repo/data/data_sourec/auth.dart';
+import 'package:icthub_new_repo/data/data_sourec/auth_data_source.dart';
 import 'package:icthub_new_repo/ui/widgets/error_widget.dart';
 import 'package:icthub_new_repo/ui/widgets/loading_widget.dart';
 

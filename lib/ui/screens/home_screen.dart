@@ -4,6 +4,8 @@ import 'package:icthub_new_repo/ui/widgets/error_widget.dart';
 import 'package:icthub_new_repo/ui/widgets/loading_widget.dart';
 import 'package:icthub_new_repo/ui/widgets/product_item_widget.dart';
 
+import '../../main.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -21,13 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ProductsDataSource.getProductsData().then((value) {
         setState(() {});
         if (value) {
-          print('data is retrieved successfully');
+          log.i('data is retrieved successfully');
         } else {
-          print('errorrrrrrrrrrrrrrrrrrrrrrr');
+          log.e('errorrrrrrrrrrrrrrrrrrrrrrr');
         }
       });
     } else {
-      print('data is already retrieved');
+      log.i('data is already retrieved');
     }
   }
 

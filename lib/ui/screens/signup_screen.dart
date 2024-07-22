@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:icthub_new_repo/core/logic/extensions.dart';
-import 'package:icthub_new_repo/data/data_sourec/auth.dart';
+import 'package:icthub_new_repo/data/data_sourec/auth_data_source.dart';
 import 'package:icthub_new_repo/ui/screens/hom_nav_bar.dart';
 import 'package:icthub_new_repo/ui/widgets/my_form_field.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +48,7 @@ class SignUpScreen extends StatelessWidget {
                   if (value!.isEmpty) {
                     return 'Name is required';
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 20),
@@ -50,6 +61,7 @@ class SignUpScreen extends StatelessWidget {
                   if (value!.isEmpty) {
                     return 'Phone is required';
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 20),
@@ -64,6 +76,7 @@ class SignUpScreen extends StatelessWidget {
                   } else if (value.isNotValidEmail()) {
                     return 'Please enter a valid email';
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 20),
@@ -78,6 +91,7 @@ class SignUpScreen extends StatelessWidget {
                   } else if (value.isNotValidPassword()) {
                     return 'Please enter a valid password';
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 20),

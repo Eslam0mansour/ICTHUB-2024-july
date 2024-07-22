@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:icthub_new_repo/data/data_sourec/auth.dart';
+import 'package:icthub_new_repo/data/data_sourec/auth_data_source.dart';
 import 'package:icthub_new_repo/ui/screens/home_screen.dart';
 import 'package:icthub_new_repo/ui/screens/login_screen.dart';
 import 'package:icthub_new_repo/ui/screens/profile_screen.dart';
@@ -29,7 +29,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
               AuthDataSource.signOut().then((a) {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
+                    builder: (context) => const LoginScreen(),
                   ),
                   (route) => false,
                 );

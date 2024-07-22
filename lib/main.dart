@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:icthub_new_repo/firebase_options.dart';
 import 'package:icthub_new_repo/ui/screens/hom_nav_bar.dart';
 import 'package:icthub_new_repo/ui/screens/login_screen.dart';
+import 'package:logger/logger.dart';
 
 Future<bool> getProductsData() async {
   var response = await http.get(Uri.parse('https://dummyjson.com/products'));
@@ -35,6 +36,10 @@ Future<bool> getProductsData() async {
 Future<void> saveItemToProductsCollection(Map<String, dynamic> item) async {
   await FirebaseFirestore.instance.collection('products').add(item);
 }
+var log = Logger(
+  printer: PrettyPrinter(),
+
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +58,7 @@ class NewProject extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: FirebaseAuth.instance.currentUser != null
           ? const HomeNavBar()
-          : LoginScreen(),
+          : const LoginScreen(),
     );
   }
 }

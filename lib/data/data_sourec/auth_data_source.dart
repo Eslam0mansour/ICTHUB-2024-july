@@ -2,10 +2,16 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:icthub_new_repo/core/logic/extensions.dart';
 import 'package:icthub_new_repo/data/data_models/user_data_model.dart';
 
+import '../../main.dart';
+
 class AuthDataSource {
+  /// this variable is used to check if an error occurred or not
   static String errorMessage = '';
+
+  /// this function is used to sign up the user to the app and save the user data to the [FireStore] collection 'users'
   static Future<UserCredential?> signUp({
     required String email,
     required String password,
@@ -19,7 +25,7 @@ class AuthDataSource {
         password: password,
       );
       if (credential.user != null) {
-        await _saveUserDocTOFirestore(
+        await _saveUserDocTOFireStore(
           email: email,
           name: name,
           phone: phone,
@@ -28,21 +34,17 @@ class AuthDataSource {
       }
       return credential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-      errorMessage = e.message ?? '';
+      errorMessage = e.code.handleSignUpException();
       return null;
     } catch (e) {
-      print(e);
+      log.e(e);
       errorMessage = e.toString();
       return null;
     }
   }
 
-  static Future<void> _saveUserDocTOFirestore({
+  /// this function is used to save the user data to the [FireStore] collection 'users'
+  static Future<void> _saveUserDocTOFireStore({
     required String email,
     required String name,
     required String phone,
@@ -59,12 +61,13 @@ class AuthDataSource {
         SetOptions(merge: true),
       );
     } on FirebaseException catch (e) {
-      print(e);
+      log.e(e);
     } catch (e) {
-      print(e);
+      log.e(e);
     }
   }
 
+  /// this function is used to sign in the user to the app
   static Future<UserCredential?> signIn({
     required String email,
     required String password,
@@ -76,24 +79,21 @@ class AuthDataSource {
       );
       return credential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-      errorMessage = e.message ?? '';
+      errorMessage = e.code.handleLoginException();
       return null;
     } catch (e) {
-      print(e);
+      log.e(e);
       errorMessage = e.toString();
       return null;
     }
   }
 
+  /// this function is used to sign out the user from the app
   static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
+  /// this function is used to get the data of the user from the [FireStore] collection 'users'
   static Future<UserDataModel?> getUserData() async {
     try {
       final uid = FirebaseAuth.instance.currentUser?.uid;
@@ -113,7 +113,8 @@ class AuthDataSource {
       return user;
     } catch (e) {
       errorMessage = e.toString();
-      print(e);
+      log.e(e);
+
       return null;
     }
   }

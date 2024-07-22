@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:icthub_new_repo/core/logic/extensions.dart';
-import 'package:icthub_new_repo/data/data_sourec/auth.dart';
+import 'package:icthub_new_repo/data/data_sourec/auth_data_source.dart';
 import 'package:icthub_new_repo/ui/screens/hom_nav_bar.dart';
 import 'package:icthub_new_repo/ui/screens/signup_screen.dart';
 import 'package:icthub_new_repo/ui/widgets/my_form_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
@@ -16,6 +21,7 @@ class LoginScreen extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +58,7 @@ class LoginScreen extends StatelessWidget {
                   } else if (value.isNotValidEmail()) {
                     return 'Please enter a valid email';
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 20),
@@ -66,6 +73,7 @@ class LoginScreen extends StatelessWidget {
                   } else if (value.isNotValidPassword()) {
                     return 'Password must be at least 6 characters';
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 20),
@@ -135,7 +143,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SignUpScreen(),
+                          builder: (context) => const SignUpScreen(),
                         ),
                       );
                     },

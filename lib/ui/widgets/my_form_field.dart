@@ -31,7 +31,7 @@ class MyFormField extends StatelessWidget {
         prefixIcon: Icon(
           prefixIcon,
         ),
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.grey,
         ),
         prefixIconColor: Colors.blue,
